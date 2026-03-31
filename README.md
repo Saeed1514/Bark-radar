@@ -1,0 +1,3 @@
+# Bark Radar
+
+Initializing repository.
