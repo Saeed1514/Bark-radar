@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Static weather radar viewer with animated radar image overlays.">
+  <title>Radar Viewer</title>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  >
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="control-panel" aria-label="Radar controls">
+      <div class="control-row control-row-primary">
+        <div class="field-group field-group-wide">
+          <label for="timestamp-select">Timestamp</label>
+          <select id="timestamp-select" aria-label="Select radar timestamp"></select>
+        </div>
+
+        <div class="button-group" role="group" aria-label="Frame controls">
+          <button id="latest-button" type="button">Latest</button>
+          <button id="previous-button" type="button">Previous</button>
+          <button id="play-button" type="button">Play</button>
+          <button id="pause-button" type="button">Pause</button>
+          <button id="next-button" type="button">Next</button>
+        </div>
+      </div>
+
+      <div class="control-row control-row-secondary">
+        <div class="field-group">
+          <label for="speed-select">Speed</label>
+          <select id="speed-select" aria-label="Animation speed">
+            <option value="250">4 fps</option>
+            <option value="400">2.5 fps</option>
+            <option value="600" selected>1.7 fps</option>
+            <option value="900">1.1 fps</option>
+            <option value="1200">0.8 fps</option>
+          </select>
+        </div>
+
+        <div class="field-group field-group-slider">
+          <label for="opacity-slider">Opacity</label>
+          <input id="opacity-slider" type="range" min="0.1" max="1" step="0.05" value="0.65" aria-label="Radar opacity">
+          <span id="opacity-value">65%</span>
+        </div>
+
+        <div class="field-group field-group-status">
+          <span class="status-chip">
+            <span class="status-label">Frames</span>
+            <span id="frame-count">0</span>
+          </span>
+          <span class="status-chip">
+            <span class="status-label">Selected</span>
+            <span id="selected-timestamp">No frame loaded</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="status-bar" aria-live="polite">
+        <span id="loading-status" class="status-message">Initializing radar viewer...</span>
+        <span id="error-status" class="status-message error-text"></span>
+      </div>
+    </header>
+
+    <main class="map-panel">
+      <div id="map" aria-label="Weather radar map"></div>
+    </main>
+  </div>
+
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
+  <script src="script.js"></script>
+</body>
+</html>
