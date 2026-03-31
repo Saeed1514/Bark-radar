@@ -438,8 +438,9 @@ function setErrorStatus(message) {
 
 function handleError(userMessage, error) {
   console.error(userMessage, error);
+  const errorMessage = getFriendlyErrorMessage(userMessage, error);
   setLoadingStatus("Radar viewer is waiting for a successful request.");
-  setErrorStatus(`${userMessage} ${error.message}`);
+  setErrorStatus(errorMessage);
   updateControlStates();
 }
 
@@ -464,4 +465,14 @@ function formatTimestampForDisplay(timestamp) {
     hour12: false,
     timeZoneName: "short"
   }).format(date);
+}
+
+function getFriendlyErrorMessage(userMessage, error) {
+  const rawMessage = error && error.message ? error.message : "Unknown error.";
+
+  if (rawMessage === "Failed to fetch" || error instanceof TypeError) {
+    return `${userMessage} Cross-origin requests are blocked because the API is missing CORS headers. Enable Access-Control-Allow-Origin on radar-flask.xyz or use a proxy on the same origin as this site.`;
+  }
+
+  return `${userMessage} ${rawMessage}`;
 }
